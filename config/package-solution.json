@@ -3,7 +3,7 @@
   "solution": {
     "name": "react-pnp-cadastro-client-side-solution",
     "id": "5a2c71de-4470-4178-9b39-b60685a6291f",
-    "version": "1.0.0.0",
+    "version": "1.0.0.3",
     "includeClientSideAssets": true,
     "isDomainIsolated": false
   },

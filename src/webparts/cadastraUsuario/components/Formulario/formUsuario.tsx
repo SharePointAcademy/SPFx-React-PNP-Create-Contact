@@ -28,11 +28,11 @@ export const ContactForm: React.FunctionComponent = () => {
       type: 'pessoal'
     });
 
-  const notificar = (title, message, type) => 
+  const notificar = (title, message, tipo) => 
   store.addNotification({
     title,
     message,
-    type,
+    type: tipo,
     insert: "top",
     container: "top-center",
     animationIn: ["animated", "fadeIn"],

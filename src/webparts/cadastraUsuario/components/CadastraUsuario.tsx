@@ -7,6 +7,7 @@ import ReactNotification from 'react-notifications-component';
 import 'react-notifications-component/dist/theme.css';
 
 export default class CadastraUsuario extends React.Component<ICadastraUsuarioProps, {}> {
+
   public render(): React.ReactElement<ICadastraUsuarioProps> {
     return (
       <div className="app-container">

@@ -10,12 +10,21 @@ import { BaseClientSideWebPart } from '@microsoft/sp-webpart-base';
 import * as strings from 'CadastraUsuarioWebPartStrings';
 import CadastraUsuario from './components/CadastraUsuario';
 import { ICadastraUsuarioProps } from './components/ICadastraUsuarioProps';
+import { sp } from '@pnp/sp';
 
 export interface ICadastraUsuarioWebPartProps {
   description: string;
 }
 
 export default class CadastraUsuarioWebPart extends BaseClientSideWebPart <ICadastraUsuarioWebPartProps> {
+
+  public onInit(): Promise<void> {
+    return super.onInit().then(_ => {
+      sp.setup({
+        spfxContext: this.context
+      });
+    });
+  }
 
   public render(): void {
     const element: React.ReactElement<ICadastraUsuarioProps> = React.createElement(
