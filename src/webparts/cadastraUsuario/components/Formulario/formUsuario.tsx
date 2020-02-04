@@ -12,27 +12,51 @@ export const ContactForm: React.FunctionComponent = () => {
     name: '',
     email: '',
     phone: '',
-    type: 'pessoal'
+    tipo: 'pessoal',
+    area: ''
   });
 
-  const { name, email, phone, type } = contact;
+  const [areas, setAreas] = React.useState([]);
+
+  const { name, email, phone, tipo, area } = contact;
+
+  const popularAreas = () => {
+    sp.web.lists
+     .getByTitle("Areas")
+     .select("Title, ID")
+     .items.top(5000)
+     .get()
+     .then(items => {
+       
+       setAreas(items);  
+     },
+     (err) => {
+       console.log(err);
+     });
+ };
+
+ React.useEffect(() => {
+  console.log("pageload");
+  popularAreas();
+  }, []);
 
   const onChange = e =>
     setContact({ ...contact, [e.target.name]: e.target.value });
 
   const clearAll = () =>
-    setContact({
+    setContact({      
       name: '',
       email: '',
       phone: '',
-      type: 'pessoal'
+      tipo: 'pessoal',
+      area: ''
     });
 
-  const notificar = (title, message, tipo) => 
+  const notificar = (title, message, tipoMensagem) => 
   store.addNotification({
     title,
     message,
-    type: tipo,
+    type: tipoMensagem,
     insert: "top",
     container: "top-center",
     animationIn: ["animated", "fadeIn"],
@@ -50,7 +74,8 @@ export const ContactForm: React.FunctionComponent = () => {
         name,
         email,
         phone,
-        type
+        type: tipo,
+        areaId: area //lookup field on the list Usuarios
       }).then(i => {
           console.log(i);
           notificar("Sucesso", "Cadastro realizado com sucesso!", "success");
@@ -68,10 +93,19 @@ export const ContactForm: React.FunctionComponent = () => {
       <h2 className='text-primary'>
        Cadastro do Contato
       </h2>
+      <select id="area" name="area" onChange={onChange}>
+        <option value="">Selecione a área</option>
+        {        
+            areas.map((areaAtual, key) => 
+                <option value={areaAtual.ID}>{areaAtual.Title}</option>
+            )
+        }
+      </select>
       <input
         type='text'
         placeholder='Nome'
         name='name'
+        id='name'
         value={name}
         onChange={onChange}
       />
@@ -79,6 +113,7 @@ export const ContactForm: React.FunctionComponent = () => {
         type='email'
         placeholder='Email'
         name='email'
+        id='email'
         value={email}
         onChange={onChange}
       />
@@ -86,23 +121,26 @@ export const ContactForm: React.FunctionComponent = () => {
         type='text'
         placeholder='Celular'
         name='phone'
+        id='phone'
         value={phone}
         onChange={onChange}
       />
       <h5>Tipo do Contato</h5>
       <input
         type='radio'
-        name='type'
+        name='tipo'
+        id='tipo'
         value='pessoal'
-        checked={type === 'pessoal'}
+        checked={tipo === 'pessoal'}
         onChange={onChange}
       />{' '}
       Pessoal{' '}
       <input
         type='radio'
-        name='type'
+        name='tipo'
+        id='tipo'
         value='profissional'
-        checked={type === 'profissional'}
+        checked={tipo === 'profissional'}
         onChange={onChange}
       />{' '}
       Profissional
