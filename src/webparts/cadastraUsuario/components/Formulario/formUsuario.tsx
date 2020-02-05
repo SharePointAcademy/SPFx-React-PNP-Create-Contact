@@ -1,6 +1,5 @@
 
 import * as React from 'react';
-import { useState } from 'react';
 
 import { sp } from '@pnp/sp';
 import './styles.css';
@@ -8,17 +7,19 @@ import { store } from 'react-notifications-component';
 
 export const ContactForm: React.FunctionComponent = () => {  
 
-  const [contact, setContact] = useState({
+  const [contact, setContact] = React.useState({
     name: '',
     email: '',
     phone: '',
     tipo: 'pessoal',
-    area: ''
+    area: '',
+    defaultImage: ''
   });
 
   const [areas, setAreas] = React.useState([]);
+  const [imageFiles, setImageFiles] = React.useState([]);
 
-  const { name, email, phone, tipo, area } = contact;
+  const { name, email, phone, tipo, area, defaultImage } = contact;
 
   const popularAreas = () => {
     sp.web.lists
@@ -40,8 +41,8 @@ export const ContactForm: React.FunctionComponent = () => {
   popularAreas();
   }, []);
 
-  const onChange = e =>
-    setContact({ ...contact, [e.target.name]: e.target.value });
+  const onChange = event =>
+    setContact({ ...contact, [event.target.name]: event.target.value });
 
   const clearAll = () =>
     setContact({      
@@ -49,7 +50,8 @@ export const ContactForm: React.FunctionComponent = () => {
       email: '',
       phone: '',
       tipo: 'pessoal',
-      area: ''
+      area: '',
+      defaultImage: ''
     });
 
   const notificar = (title, message, tipoMensagem) => 
@@ -67,17 +69,19 @@ export const ContactForm: React.FunctionComponent = () => {
     }
   });
 
-  const onSubmit = e => {
-    e.preventDefault();
+  const onSubmit = event => {
+    event.preventDefault();       
     
     sp.web.lists.getByTitle("Usuarios").items.add({
         name,
         email,
         phone,
         type: tipo,
-        areaId: area //lookup field on the list Usuarios
-      }).then(i => {
-          console.log(i);
+        areaId: area, //lookup field on the list Usuarios
+        defaultImage: (imageFiles[0].name != null ? imageFiles[0].name.toString() : "")
+      }).then(i => {          
+          CriarFolder("ProdutosImagens", i.data.ID.toString())
+          UploadArquivo(`ProdutosImagens/${i.data.ID}`);
           notificar("Sucesso", "Cadastro realizado com sucesso!", "success");
       },
       (err) => {
@@ -87,6 +91,51 @@ export const ContactForm: React.FunctionComponent = () => {
     
     clearAll();
   };
+
+  const UploadArquivo = (nomeBiblioteca: string) => {
+    
+    let files = imageFiles;
+
+    if (files.length > 0) {
+      
+      files.forEach(element => {
+        //Upload a file to the SharePoint Library
+        sp.web.getFolderByServerRelativeUrl(nomeBiblioteca).files.add(element.name, element, true)
+        .then((data) => {
+            console.log(data);
+        },
+        (err) => {
+            console.log(err);
+        })
+      });
+    }
+  }
+
+  const CriarFolder = async (nomeBiblioteca: string, nomeFolder: string) => {
+    await sp.web.lists.getByTitle(nomeBiblioteca).rootFolder.serverRelativeUrl.get()
+        .then(response => {
+            sp.web
+                .getFolderByServerRelativeUrl(response)
+                .folders.add(nomeFolder);
+        },
+        (err) => {
+            console.log(err);
+        });
+  }
+  
+  const onChangeHandler = event =>{
+  
+    let files = event.target.files;
+    let contador = 0;
+    var arquivos = [];
+
+    for(contador; contador < files.length; contador++)
+    {
+      arquivos.push(files[contador]);
+    }
+
+    setImageFiles(arquivos);
+  }
 
   return (
     <form onSubmit={onSubmit}>
@@ -129,7 +178,6 @@ export const ContactForm: React.FunctionComponent = () => {
       <input
         type='radio'
         name='tipo'
-        id='tipo'
         value='pessoal'
         checked={tipo === 'pessoal'}
         onChange={onChange}
@@ -138,12 +186,14 @@ export const ContactForm: React.FunctionComponent = () => {
       <input
         type='radio'
         name='tipo'
-        id='tipo'
         value='profissional'
         checked={tipo === 'profissional'}
         onChange={onChange}
       />{' '}
       Profissional
+      <div>
+        <input type="file" name="imageFiles" onChange={onChangeHandler} multiple />
+      </div>
       <div>
         <input
           type='submit'
@@ -151,7 +201,10 @@ export const ContactForm: React.FunctionComponent = () => {
           className='btn btn-primary btn-block'
         />
       </div>
+
       
     </form>
   );
+
+
 };
