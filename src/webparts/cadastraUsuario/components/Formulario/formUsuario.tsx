@@ -7,6 +7,10 @@ import { store } from 'react-notifications-component';
 
 export const ContactForm: React.FunctionComponent = () => {  
 
+  const pictureLibraryName: string = "ProdutosImagens";
+  const listArea: string = "Areas";
+  const listUsuario: string = "Usuarios";
+
   const [contact, setContact] = React.useState({
     name: '',
     email: '',
@@ -23,7 +27,7 @@ export const ContactForm: React.FunctionComponent = () => {
 
   const popularAreas = () => {
     sp.web.lists
-     .getByTitle("Areas")
+     .getByTitle(listArea)
      .select("Title, ID")
      .items.top(5000)
      .get()
@@ -72,7 +76,7 @@ export const ContactForm: React.FunctionComponent = () => {
   const onSubmit = event => {
     event.preventDefault();       
     
-    sp.web.lists.getByTitle("Usuarios").items.add({
+    sp.web.lists.getByTitle(listUsuario).items.add({
         name,
         email,
         phone,
@@ -80,22 +84,21 @@ export const ContactForm: React.FunctionComponent = () => {
         areaId: area, //lookup field on the list Usuarios
         defaultImage: (imageFiles[0].name != null ? imageFiles[0].name.toString() : "")
       }).then(i => {          
-          CriarFolder("ProdutosImagens", i.data.ID.toString())
-          UploadArquivo(`ProdutosImagens/${i.data.ID}`);
+          CriarFolder(pictureLibraryName, i.data.ID.toString())
+          UploadArquivo(`${pictureLibraryName}/${i.data.ID}`);
           notificar("Sucesso", "Cadastro realizado com sucesso!", "success");
+          clearAll();
       },
       (err) => {
         console.log(err);
         notificar("Erro", "Ocorreu um erro no cadastro!", "danger");
       });
-    
-    clearAll();
+        
   };
 
   const UploadArquivo = (nomeBiblioteca: string) => {
     
     let files = imageFiles;
-
     if (files.length > 0) {
       
       files.forEach(element => {
@@ -201,7 +204,6 @@ export const ContactForm: React.FunctionComponent = () => {
           className='btn btn-primary btn-block'
         />
       </div>
-
       
     </form>
   );
