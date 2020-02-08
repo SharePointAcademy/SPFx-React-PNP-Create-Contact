@@ -48,6 +48,20 @@ export const ContactForm: React.FunctionComponent = () => {
   const onChange = event =>
     setContact({ ...contact, [event.target.name]: event.target.value });
 
+  const onChangeHandler = event =>{
+
+    let files = event.target.files;
+    let contador = 0;
+    var arquivos = [];
+
+    for(contador; contador < files.length; contador++)
+    {
+      arquivos.push(files[contador]);
+    }
+
+    setImageFiles(arquivos);
+  };
+  
   const clearAll = () =>
     setContact({      
       name: '',
@@ -126,19 +140,7 @@ export const ContactForm: React.FunctionComponent = () => {
         
   };  
   
-  const onChangeHandler = event =>{
   
-    let files = event.target.files;
-    let contador = 0;
-    var arquivos = [];
-
-    for(contador; contador < files.length; contador++)
-    {
-      arquivos.push(files[contador]);
-    }
-
-    setImageFiles(arquivos);
-  };
 
   return (
     <form onSubmit={onSubmit}>
