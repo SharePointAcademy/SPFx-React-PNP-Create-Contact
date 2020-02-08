@@ -19,7 +19,7 @@ area            lookup (list Areas)
 defaultImage    text
 
 
-Create a Picture Library - 
+Create a Picture Library - Imagens
 
 
 ### Building the code

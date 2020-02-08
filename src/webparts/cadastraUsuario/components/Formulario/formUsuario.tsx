@@ -7,7 +7,7 @@ import { store } from 'react-notifications-component';
 
 export const ContactForm: React.FunctionComponent = () => {  
 
-  const pictureLibraryName: string = "ProdutosImagens";
+  const pictureLibraryName: string = "Imagens";
   const listArea: string = "Areas";
   const listUsuario: string = "Usuarios";
 
@@ -73,29 +73,6 @@ export const ContactForm: React.FunctionComponent = () => {
     }
   });
 
-  const onSubmit = event => {
-    event.preventDefault();       
-    
-    sp.web.lists.getByTitle(listUsuario).items.add({
-        name,
-        email,
-        phone,
-        type: tipo,
-        areaId: area, //lookup field on the list Usuarios
-        defaultImage: (imageFiles[0].name != null ? imageFiles[0].name.toString() : "")
-      }).then(i => {          
-          CriarFolder(pictureLibraryName, i.data.ID.toString())
-          UploadArquivo(`${pictureLibraryName}/${i.data.ID}`);
-          notificar("Sucesso", "Cadastro realizado com sucesso!", "success");
-          clearAll();
-      },
-      (err) => {
-        console.log(err);
-        notificar("Erro", "Ocorreu um erro no cadastro!", "danger");
-      });
-        
-  };
-
   const UploadArquivo = (nomeBiblioteca: string) => {
     
     let files = imageFiles;
@@ -109,10 +86,10 @@ export const ContactForm: React.FunctionComponent = () => {
         },
         (err) => {
             console.log(err);
-        })
+        });
       });
     }
-  }
+  };
 
   const CriarFolder = async (nomeBiblioteca: string, nomeFolder: string) => {
     await sp.web.lists.getByTitle(nomeBiblioteca).rootFolder.serverRelativeUrl.get()
@@ -124,7 +101,30 @@ export const ContactForm: React.FunctionComponent = () => {
         (err) => {
             console.log(err);
         });
-  }
+  };
+
+  const onSubmit = event => {
+    event.preventDefault();       
+    
+    sp.web.lists.getByTitle(listUsuario).items.add({
+        name,
+        email,
+        phone,
+        type: tipo,
+        areaId: area, //lookup field on the list Usuarios
+        defaultImage: (imageFiles[0].name != null ? imageFiles[0].name.toString() : "")
+      }).then(i => {          
+          CriarFolder(pictureLibraryName, i.data.ID.toString());
+          UploadArquivo(`${pictureLibraryName}/${i.data.ID}`);
+          notificar("Sucesso", "Cadastro realizado com sucesso!", "success");
+          clearAll();
+      },
+      (err) => {
+        console.log(err);
+        notificar("Erro", "Ocorreu um erro no cadastro!", "danger");
+      });
+        
+  };  
   
   const onChangeHandler = event =>{
   
@@ -138,7 +138,7 @@ export const ContactForm: React.FunctionComponent = () => {
     }
 
     setImageFiles(arquivos);
-  }
+  };
 
   return (
     <form onSubmit={onSubmit}>
