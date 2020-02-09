@@ -4,10 +4,11 @@ This is where you include your WebPart documentation.
 
 ### Lists and Picture Library
 
+```
+
 Create a List - Areas
 Fields      Type       
 Title       text
-
 
 Create a List - Usuarios
 Fields          Type       
@@ -18,9 +19,9 @@ type            text
 area            lookup (list Areas)
 defaultImage    text
 
-
 Create a Picture Library - Imagens
 
+```
 
 ### Building the code
 
