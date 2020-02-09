@@ -1,0 +1,15 @@
+.imagemContato{
+    width: 80px
+}
+.imagemContatoGrande{
+    width: 140px
+}
+table th,
+table td {
+  padding: 1rem;
+  text-align: left;
+}
+
+table th {
+  background: var(--light-color);
+}

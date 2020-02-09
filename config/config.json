@@ -9,10 +9,19 @@
           "manifest": "./src/webparts/cadastraUsuario/CadastraUsuarioWebPart.manifest.json"
         }
       ]
+    },
+    "lista-contatos-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/listaContatos/ListaContatosWebPart.js",
+          "manifest": "./src/webparts/listaContatos/ListaContatosWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
-    "CadastraUsuarioWebPartStrings": "lib/webparts/cadastraUsuario/loc/{locale}.js"
+    "CadastraUsuarioWebPartStrings": "lib/webparts/cadastraUsuario/loc/{locale}.js",
+    "ListaContatosWebPartStrings": "lib/webparts/listaContatos/loc/{locale}.js"
   }
 }
