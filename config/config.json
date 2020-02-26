@@ -17,11 +17,20 @@
           "manifest": "./src/webparts/listaContatos/ListaContatosWebPart.manifest.json"
         }
       ]
+    },
+    "cadastra-produto-web-part": {
+      "components": [
+        {
+          "entrypoint": "./lib/webparts/cadastraProduto/CadastraProdutoWebPart.js",
+          "manifest": "./src/webparts/cadastraProduto/CadastraProdutoWebPart.manifest.json"
+        }
+      ]
     }
   },
   "externals": {},
   "localizedResources": {
     "CadastraUsuarioWebPartStrings": "lib/webparts/cadastraUsuario/loc/{locale}.js",
-    "ListaContatosWebPartStrings": "lib/webparts/listaContatos/loc/{locale}.js"
+    "ListaContatosWebPartStrings": "lib/webparts/listaContatos/loc/{locale}.js",
+    "CadastraProdutoWebPartStrings": "lib/webparts/cadastraProduto/loc/{locale}.js"
   }
 }

@@ -45,6 +45,7 @@
     "@types/jquery": "^3.3.32",
     "@types/mocha": "2.2.38",
     "ajv": "~5.2.2",
-    "gulp": "~3.9.1"
+    "gulp": "~3.9.1",
+    "react-intl-currency-input": "^0.1.9"
   }
 }
