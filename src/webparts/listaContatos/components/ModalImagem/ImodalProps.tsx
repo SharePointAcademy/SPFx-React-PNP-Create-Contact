@@ -5,6 +5,6 @@ export default interface IModalPros{
         ServerRelativeUrl: string;
     }];
     showModal: boolean;
-    onPress: SetModalCallback
+    onPress: SetModalCallback;
     
 }

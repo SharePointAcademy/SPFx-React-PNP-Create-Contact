@@ -5,6 +5,11 @@ This is where you include your WebPart documentation.
 ### Lists and Picture Library
 
 ```
+Create a List - Product
+Fields      Type       
+name        text
+stock       number
+price       currency
 
 Create a List - Areas
 Fields      Type       

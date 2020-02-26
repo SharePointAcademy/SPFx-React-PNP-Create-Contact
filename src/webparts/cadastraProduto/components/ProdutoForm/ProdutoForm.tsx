@@ -16,14 +16,13 @@ const currencyConfig = {
 };
 
 const ProdutoForm = (props) => {
-
-    let defaultValue = 0;
+    
     const { onSubmit } = props;
 
     const [product, setProduct] = React.useState({
         name: '',
         stock: '',
-        price: 0,        
+        price: '',        
       });
 
     const { name, stock, price } = product;
@@ -32,9 +31,9 @@ const ProdutoForm = (props) => {
         setProduct({      
             name: '',
             stock: '',
-            price: 0, 
+            price: '', 
         });        
-    }
+    };
 
     async function handleAddProduct(e) {
         e.preventDefault();
@@ -54,9 +53,10 @@ const ProdutoForm = (props) => {
 
     const handleChange = (event, value, maskedValue) => {
         event.preventDefault();
+
         setProduct({ ...product, price: value });
-        // console.log(value); // value without mask (ex: 1234.56)
-        // console.log(maskedValue); // masked value (ex: R$1234,56)
+         //console.log(value); // value without mask (ex: 1234.56)
+         //console.log(maskedValue); // masked value (ex: R$1234,56)
     };
 
     return (
@@ -66,12 +66,12 @@ const ProdutoForm = (props) => {
             <label>Stock</label>
             <input type="text" name="stock" onChange={onChange} value={ stock }/>
             <label>Preço</label>
-            <IntlCurrencyInput name="price" currency="BRL" config={currencyConfig} onChange={handleChange} 
-            defaultValue={defaultValue}/>
+            <IntlCurrencyInput id="price" currency="BRL" config={currencyConfig} onChange={handleChange} 
+            defaultValue={price} />
 
-            <button type="submit">Salvar</button>
+            <button type="submit">Salvar</button>           
         </form>
     );
-}
+};
 
 export default ProdutoForm;
