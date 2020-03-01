@@ -21,7 +21,8 @@ export default class CadastraProdutoWebPart extends BaseClientSideWebPart <ICada
     const element: React.ReactElement<ICadastraProdutoProps> = React.createElement(
       CadastraProduto,
       {
-        description: this.properties.description
+        description: this.properties.description,
+        siteUrl: this.context.pageContext.web.absoluteUrl
       }
     );
 

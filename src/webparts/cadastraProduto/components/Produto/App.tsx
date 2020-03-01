@@ -1,12 +1,15 @@
 import * as React from 'react';
 import { sp } from '@pnp/sp';
 import ProdutoForm from '../ProdutoForm/ProdutoForm';
+import ProdutoList from '../ProdutoList/ProdutoList';
 
-function App() {
+function App(props) {
 
   const [products, setProducts] = React.useState([]);
 
   async function handleAddProduct(data) {
+
+    console.log(props);
 
     const { name, stock, price } = data;
 
@@ -28,6 +31,7 @@ function App() {
   return (
     <div className="App">
       <ProdutoForm onSubmit={handleAddProduct} />
+      <ProdutoList siteUrl={props.siteUrl}/>
     </div>
   );
 }
