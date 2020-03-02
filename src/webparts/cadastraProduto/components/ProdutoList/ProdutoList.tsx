@@ -14,7 +14,7 @@ interface Properties {
 export const ProdutoList: React.FunctionComponent<Properties> = props => {    
     
     var response = response || [];
-    let url = props.siteUrl + "/_api/web/lists/getbytitle('Product')/items?$select=ID,name,stock,price&$top=3000";
+    let url = props.siteUrl + "/_api/web/lists/getbytitle('Product')/items?$select=ID,name,stock,price&$top=4999";
 
     const [products, setProducts] = React.useState([]);
 
@@ -70,10 +70,10 @@ export const ProdutoList: React.FunctionComponent<Properties> = props => {
         let name: string;
         let stock, price: number;
 
-        for (let cont = 1001; cont < 5050; cont++) {
+        for (let cont = 5051; cont < 100050; cont++) {
             name = "Product " + cont.toString();
-            stock = 10;
-            price = 5.60;
+            stock = 20;
+            price = 122.60;
 
             await sp.web.lists.getByTitle("Product").items.add({
                 name,
@@ -98,7 +98,7 @@ export const ProdutoList: React.FunctionComponent<Properties> = props => {
                 rowsPerPage={50}
                 rowsPerPageOption={[20, 50, 100]}
                 onRowClick={onRowClick}
-                initialSort={{ prop: 'name', isAscending: true }}
+                initialSort={{ prop: 'ID', isAscending: true }}
                 onSort={onSortFunction}
             />
 

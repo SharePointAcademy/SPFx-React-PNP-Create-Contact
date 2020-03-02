@@ -1,4 +1,9 @@
-/*install this references*/
+/*criar nova webpart cadastraProduto*/
+- abra o node e digite na pasta raiz do projeto, digite o comando abaixo e aperte enter
+yo @microsoft/sharepoint
+
+
+/*instalar essas referencias*/
 
 npm install --save react-bs-datatable
 npm install --save moment
@@ -6,7 +11,7 @@ npm install --save bootstrap-4-react
 npm install --save-dev @fortawesome/fontawesome-free
 npm install url-loader@2.2.0 --save-dev
 
-/*replace gulpfile.js with this code*/
+/*atualizar gulpfile.js com esse codigo*/
 
 "use strict";
 
@@ -28,4 +33,4 @@ build.configureWebpack.mergeConfig({
 });
 build.initialize(gulp);
 
-/* end replace gulpfile.js with this code*/
+/* fim atualizar gulpfile.js com esse codigo*/

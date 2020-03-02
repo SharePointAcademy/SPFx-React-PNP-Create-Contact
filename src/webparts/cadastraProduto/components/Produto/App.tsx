@@ -7,9 +7,7 @@ function App(props) {
 
   const [products, setProducts] = React.useState([]);
 
-  async function handleAddProduct(data) {
-
-    console.log(props);
+  async function handleAddProduct(data) {    
 
     const { name, stock, price } = data;
 
